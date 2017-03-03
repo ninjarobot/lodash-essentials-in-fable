@@ -1,0 +1,19 @@
+{
+  "name": "lodash-essentials-in-fable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fable-compiler": "^0.7.48"
+  },
+  "dependencies": {
+    "fable-core": "^0.7.28",
+    "lodash": "^4.17.4"
+  }
+}
