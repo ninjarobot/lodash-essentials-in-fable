@@ -72,3 +72,52 @@ collection3 |> Seq.sortBy (fun n -> n.name)
 printfn "### Sample 3 - Now we use lodash ###"
 lodash?sortBy(collection3, "name") :?> seq<Named>
 |> Seq.iter(printfn "%A")
+
+// Need some type safety for lodash functions.
+
+printfn "### Type safe lodash ###"
+
+open Fable.Core
+
+module Lodash =
+    [<Import("*","lodash")>]
+    type Globals =
+        static member forEach<'t> (collection:array<'t>) (func:'t -> unit) : unit = jsNative
+        static member filter<'t> (collection:array<'t>) (func:'t -> bool) : seq<'t> = jsNative
+        static member sortedIndex<'t> (collection:array<'t>) (indexOf:'t) : int = jsNative
+
+/// Alias to give a short way to refer to these globals.        
+type ld = Lodash.Globals
+
+printfn "### For Each ###"
+
+ld.forEach collection3 (fun n -> printfn "Item %A" n)
+
+printfn "### Sorted index ###"
+let collection4 = 
+    [|
+        "Carl"
+        "Gary"
+        "Luigi"
+        "Otto"
+    |]
+ld.sortedIndex collection4 "Luke"
+|> printfn "Index to put Luke: %i"
+
+type Person = {
+    name : string
+    age : int
+    gender : string
+}
+
+let people = 
+    [|
+        { name="Moe"; age=47; gender="m" }
+        { name="Sarah"; age=32; gender="f" }
+        { name="Melissa"; age=32; gender="f" }
+        { name="Dave"; age=32; gender="m" }
+    |]
+
+printfn "### Filtered ###"
+ld.filter people (fun p -> p.age = 32 && p.gender="f" )
+|> Seq.iter(printfn "%A")
