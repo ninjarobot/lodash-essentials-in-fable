@@ -1,4 +1,5 @@
 (*
+    npm install --save-dev fable-compiler
     npm install --save fable-core lodash
     fable ch1.fsx --module commonjs
     node ch1.js
